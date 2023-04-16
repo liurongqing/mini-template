@@ -3,5 +3,13 @@
   "uuid": "68d4bd53-119b-47ce-984e-56a65bf7d239",
   "creator": {
     "version": "3.7.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "typescript": "^5.0.4"
   }
 }
