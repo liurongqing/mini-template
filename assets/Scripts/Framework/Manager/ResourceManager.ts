@@ -47,7 +47,7 @@ export class ResourceManager extends Component {
 
       this.progressFunc?.(this.now, this.total);
 
-      console.log(this.now, this.total);
+      // console.log(this.now, this.total);
       if (this.now >= this.total) {
         if (this.endFunc !== null) {
           this.endFunc();
@@ -68,11 +68,12 @@ export class ResourceManager extends Component {
   }
 
   // var pkg = {GUI: {assetType: cc.Prefab, urls: ["", "", ""] }};
-  public preload(resPkg: any, progressFunc: any, endFunc: any): void {
-    this.total = 0;
-    this.now = 0;
+  public preloadResPkg(resPkg: any, progressFunc: any, endFunc: any): void {
     this.totalAb = 0;
     this.nowAb = 0;
+
+    this.total = 0;
+    this.now = 0;
 
     this.progressFunc = progressFunc;
     this.endFunc = endFunc;
@@ -92,7 +93,9 @@ export class ResourceManager extends Component {
     }
   }
 
-  // public unloadResPkg(resPkg: any): void {}
+  public unloadRes(resPkg: any): void {
+    console.log("unload...");
+  }
 
   // public prelaodRes(
   //   abName: string,

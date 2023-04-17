@@ -1,8 +1,8 @@
-import { Button, Component, isValid, Input, Node, instantiate } from "cc";
+import { Button, Component, isValid, Input, find, Node, instantiate } from "cc";
 import { ResourceManager } from "./ResourceManager";
 
 export class UIManager extends Component {
-  private Canvas: Node = null;
+  private canvas: Node = null;
   public static Instance: UIManager = null;
   private uiMap = {};
 
@@ -14,22 +14,16 @@ export class UIManager extends Component {
       return;
     }
 
-    console.log("this.node", this.node);
-
-    this.Canvas = this.node;
-    // this.Canvas = this.node.parent;
+    this.canvas = find("Canvas");
   }
 
-  public show_ui(ui_name, parent?: Node): Node {
-    if (!parent) {
-      parent = this.Canvas;
-    }
-
+  public show_ui(ui_name, parent = this.canvas): Node {
     const prefab = ResourceManager.Instance.getAsset("GUI", "UIPrefabs/UIGame");
     console.log("prefab", prefab, parent);
     let item = null;
     if (prefab) {
       item = instantiate(prefab);
+      console.log("parent", parent);
       parent.addChild(item);
       item.addComponent(ui_name + "Control");
     }

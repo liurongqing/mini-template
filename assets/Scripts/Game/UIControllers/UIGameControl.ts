@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Label } from "cc";
 import { UIControl } from "./UIControl";
 
 const { ccclass } = _decorator;

@@ -1,13 +1,21 @@
-import { _decorator, Component, Node } from "cc";
+import { _decorator, Component } from "cc";
 import { Game } from "./Game/Game";
 import { ResourceManager, UIManager } from "./Framework/Manager";
 
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 // 代码入口
 @ccclass("GameLaunch")
 export class GameLaunch extends Component {
+  public static Instance: GameLaunch = null;
+
   onLoad(): void {
+    if (GameLaunch.Instance === null) {
+      GameLaunch.Instance = this;
+    } else {
+      this.destroy();
+      return;
+    }
     // 初始化网络管理、日志管理、声音管理等等
 
     // 资源管理
@@ -25,6 +33,4 @@ export class GameLaunch extends Component {
     // 进入游戏代码的逻辑
     Game.Instance.GameStart();
   }
-
-  //   update(deltaTime: number) {}
 }
