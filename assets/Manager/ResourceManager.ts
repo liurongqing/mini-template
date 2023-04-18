@@ -1,5 +1,15 @@
-import { AssetManager, Component, assetManager, log, warn, error } from "cc";
+import {
+  AssetManager,
+  Component,
+  assetManager,
+  log,
+  warn,
+  error,
+  SpriteAtlas,
+  Prefab,
+} from "cc";
 
+import { IAssetType } from "../Data";
 interface IParamProgress {
   (now: number, total: number): void;
 }
@@ -24,7 +34,7 @@ export class ResourceManager extends Component {
 
   // 加载所有的 ab 包
   public async loadBundles(
-    bundleMap: Map<string, string[]>,
+    bundleMap,
     onProgress?: IParamProgress,
     onComplete?: IParamComplete
   ): Promise<any> {
@@ -32,19 +42,20 @@ export class ResourceManager extends Component {
     this.now = 0;
 
     const queue = [];
-    for (const [abName, urls] of bundleMap) {
+    // console.log("bundleMap", bundleMap);
+    for (const [abName, asset] of bundleMap) {
       queue.push(
         new Promise((resolve) => {
           assetManager.loadBundle(abName, (err, bundle) => {
             if (err) {
               error(`加载ab包(${abName})失败`, err);
-              resolve({ err, urls });
+              resolve({ err, asset });
             } else {
               log(`加载ab包(${abName})成功`);
               resolve({
                 err: null,
                 bundle,
-                urls,
+                asset,
               });
             }
           });
@@ -53,10 +64,21 @@ export class ResourceManager extends Component {
     }
     // 加载完所有的 ab 包
     const bundles = await Promise.all(queue);
-    this.total = bundles.reduce((acc, cur) => acc + cur?.urls?.length, 0);
+    // console.log("bundles", bundles);
+    this.total = bundles.reduce((acc, cur) => {
+      // console.log("cur", cur);
+      const num =
+        cur?.asset?.reduce(
+          (subAcc, subCur) => subAcc + (subCur.urls?.length ?? 0),
+          0
+        ) || 0;
+      return acc + num;
+    }, 0);
+    // console.log("this.total", this.total);
+    // return;
 
-    for (const { err, bundle, urls } of bundles) {
-      this.loadAsset(err, bundle, urls, onProgress, onComplete);
+    for (const { err, bundle, asset } of bundles) {
+      this.loadAsset(err, bundle, asset, onProgress, onComplete);
     }
   }
 
@@ -64,39 +86,48 @@ export class ResourceManager extends Component {
   private async loadAsset(
     err: Error,
     bundle: AssetManager.Bundle,
-    urls: string[],
+    asset,
     onProgress,
     onComplete
   ) {
     if (err) {
-      this.now += urls.length;
+      // const num = asset?.urls?.reduce((acc,cur)=> acc + cur?.,0)
+      const num = asset?.reduce((acc, cur) => acc + cur?.urls?.length ?? 0, 0);
+      this.now += num;
       return;
     }
-    urls.forEach((url: string) => {
-      bundle.load(url, (err, data) => {
-        this.now++;
-        onProgress?.(this.now, this.total);
-        if (err) {
-          error(`加载ab包(${bundle.name})下的资源(${url})，失败`, err);
-          return;
-        }
-        log(`加载ab包(${bundle.name})下的资源(${url})，成功`);
-        if (this.now >= this.total) {
-          // 全部加载完成
-          log("全部加载完成");
-          onComplete?.();
-        }
+    asset.forEach((item) => {
+      item?.urls?.forEach((url) => {
+        bundle.load(url, item.type, (err) => {
+          this.now++;
+          onProgress?.(this.now, this.total);
+          if (err) {
+            error(
+              `加载ab包(${bundle.name})下类型为(${item.type?.name})的资源(${url})，失败`,
+              err
+            );
+            return;
+          }
+          log(
+            `加载ab包(${bundle.name})下类型为(${item.type?.name})的资源(${url})，成功`
+          );
+          if (this.now >= this.total) {
+            // 全部加载完成
+            log("全部加载完成");
+            onComplete?.();
+          }
+        });
       });
     });
   }
 
   // 读取资源
-  public getAsset(abName: string, url: string): any {
+  public getAsset(abName: string, url: string, type: any = Prefab): any {
     const bondule = assetManager.getBundle(abName);
     if (!bondule) {
-      warn(`加载ab包(${abName})下的资源(${url})，失败`);
+      warn(`加载ab包(${abName})下类型为(${type?.name})的资源(${url})，失败`);
       return null;
     }
-    return bondule.get(url);
+    return bondule.get(url, type);
   }
 }

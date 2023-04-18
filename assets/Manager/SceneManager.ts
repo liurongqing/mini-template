@@ -1,4 +1,4 @@
-import { Component, find, Node, instantiate, error } from "cc";
+import { Component, find, Node, instantiate, error, warn } from "cc";
 import { ResourceManager } from "./ResourceManager";
 import { AB_KEY } from "../Data";
 
@@ -40,22 +40,30 @@ export class SceneManager extends Component {
     try {
       item.addComponent(sceneName + "System");
     } catch (err) {
-      error(`请创建 ${sceneName + "System.ts"} 文件`);
+      warn(`没有创建 ${sceneName + "System.ts"} 文件，在你意料之中，则忽略`);
     }
     this.scenes.set(sceneName, item);
     console.log(this.scenes);
   }
 
   // 关闭一个场景
-  public sceneStop(sceneName) {
+  public sceneStop(sceneName, force = false) {
     const scene = this.scenes.get(sceneName);
-
     console.log("停止一个场景 ", sceneName, scene);
-
     if (scene) {
+      if (force) {
+        this.scenes.delete(sceneName);
+        // scene.destroy();
+        scene.removeFromParent()
+      }
       scene.active = false;
       return;
     }
+  }
+
+  public sceneRestart(sceneName) {
+    this.sceneStop(sceneName, true);
+    this.sceneStart(sceneName);
   }
 
   // 清空场景

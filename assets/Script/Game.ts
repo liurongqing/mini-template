@@ -32,7 +32,7 @@ export class Game extends Component {
 
   // 游戏开始入口
   public GameStart(): void {
-    console.log("Game Start...", Bundles);
+    // console.log("Game Start...", Bundles);
     ResourceManager.Instance.loadBundles(
       Bundles,
       this.onProgress,
@@ -55,6 +55,7 @@ export class Game extends Component {
     // 检查更新
 
     // 进入场景
-    SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
+    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
+    SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
   }
 }

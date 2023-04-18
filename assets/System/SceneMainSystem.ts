@@ -2,6 +2,7 @@ import { _decorator } from "cc";
 import { BaseSystem } from "./BaseSystem";
 import { SceneManager } from "../Manager";
 import { AB_KEY } from "../Data";
+import { throttle } from "../Utils";
 
 const { ccclass } = _decorator;
 
@@ -27,14 +28,16 @@ export class SceneMainSystem extends BaseSystem {
     this.addButtonListen(floor, this.hanldeTabChange, this);
   }
 
-  private hanldeTabChange(event) {
-    this.closeAll();
+  private hanldeTabChange = throttle((event) => {
+    console.log("event", event);
     const name = event?.currentTarget?.name;
     const layer = this.layers.get(name + "Layer");
     if (!layer) return;
-    layer.active = true;
-  }
-
+    if (!layer.active) {
+      this.closeAll();
+      layer.active = true;
+    }
+  }, 100);
   // 关闭所有
   private closeAll() {
     this.layers.forEach((layer) => {
