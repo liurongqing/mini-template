@@ -1,5 +1,7 @@
 import { _decorator } from "cc";
 import { BaseSystem } from "./BaseSystem";
+import { SceneManager } from "../Manager";
+import { AB_KEY } from "../Data";
 
 const { ccclass } = _decorator;
 
@@ -16,10 +18,8 @@ export class SceneHomeSystem extends BaseSystem {
   }
 
   private onGameStartClick() {
-    console.log("点击了");
+    console.log("点击开始游戏");
+    // SceneManager.Instance.sceneStop(AB_KEY.ENTITY_SCENE_HOME);
+    SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);
   }
-
-  //   start() {
-  //     console.log("2...");
-  //   }
 }

@@ -1,5 +1,4 @@
-import { _decorator, Button, Component, Input, Node, warn } from "cc";
-const { ccclass, property } = _decorator;
+import { Button, Component, Input, Node, warn } from "cc";
 
 export class BaseSystem extends Component {
   protected entities; // 实体集体
@@ -19,7 +18,6 @@ export class BaseSystem extends Component {
 
   // 添加按钮事件
   protected addButtonListen(node: Node | string, callback, context) {
-    console.log(node);
     if (typeof node === "string") {
       node = this.entities.get(node);
     }
@@ -38,13 +36,3 @@ export class BaseSystem extends Component {
     (node as Node).on(Input.EventType.TOUCH_START, callback, context);
   }
 }
-
-//
-//   public add_button_listen(view_name, caller, func) {
-//     const view_node = this.view[view_name];
-//     if (!view_node) return;
-//     const button = view_node.getComponent(Button);
-//     if (!button) return;
-//     view_node.on(Input.EventType.TOUCH_START, func, caller);
-//   }
-// }

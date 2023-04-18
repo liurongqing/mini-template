@@ -47,7 +47,7 @@ export class Game extends Component {
 
   // 加载完成
   private onComplete = () => {
-    // this.canvas?.destroyAllChildren();
+    this.canvas?.destroyAllChildren();
     this.EnterGameScene();
   };
 
