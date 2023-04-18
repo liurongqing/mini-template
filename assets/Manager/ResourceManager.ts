@@ -86,7 +86,6 @@ export class ResourceManager extends Component {
         }
       });
     });
-    // log(bundle, asset);
   }
 
   // 读取资源

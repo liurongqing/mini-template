@@ -1,6 +1,6 @@
 import { _decorator, Component } from "cc";
-import { Game } from "./Game/Game";
-import { ResourceManager, UIManager } from "./Framework/Manager";
+import { Game } from "./Game";
+import { ResourceManager, UIManager } from "../Manager";
 
 const { ccclass } = _decorator;
 
@@ -8,11 +8,9 @@ const { ccclass } = _decorator;
 @ccclass("GameLaunch")
 export class GameLaunch extends Component {
   onLoad(): void {
-    // 设置初始化
-
-    // 初始化网络管理、日志管理、声音管理等等
     // 资源管理
     this.node.addComponent(ResourceManager);
+
     // UI 管理
     this.node.addComponent(UIManager);
 
