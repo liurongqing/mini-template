@@ -7,17 +7,10 @@ const { ccclass } = _decorator;
 // 代码入口
 @ccclass("GameLaunch")
 export class GameLaunch extends Component {
-  public static Instance: GameLaunch = null;
-
   onLoad(): void {
-    if (GameLaunch.Instance === null) {
-      GameLaunch.Instance = this;
-    } else {
-      this.destroy();
-      return;
-    }
-    // 初始化网络管理、日志管理、声音管理等等
+    // 设置初始化
 
+    // 初始化网络管理、日志管理、声音管理等等
     // 资源管理
     this.node.addComponent(ResourceManager);
     // UI 管理
