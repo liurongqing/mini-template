@@ -12,6 +12,7 @@ import {
   log,
   error,
   instantiate,
+  warn,
 } from "cc";
 import { BaseSystem } from "./BaseSystem";
 import { ResourceManager, SceneManager } from "../Manager";
@@ -36,6 +37,7 @@ export class SceneRockCandySystem extends BaseSystem {
   private stickNode: Node = null;
   private showStickNode = null;
   private isFail = false; // 失败了。
+  private restartBtn = null;
   protected onLoad(): void {
     super.onLoad();
     // console.log("SceneRockCandySystem");
@@ -54,6 +56,7 @@ export class SceneRockCandySystem extends BaseSystem {
 
     this.stickNode = this.entities.get("Sticks");
     this.showStickNode = this.entities.get("ShowSticks");
+    this.restartBtn = this.entities.get("Restart")
     this.scoreLabel = this.entities.get("Score").getComponent(Label);
     this.scoreLabel.string = this.format(this.score);
   }
@@ -126,17 +129,16 @@ export class SceneRockCandySystem extends BaseSystem {
     /**
      * 精灵处理
      */
-    const findNode = this.stickNode.children[n];
+    // const findNode = this.stickNode.children[n];
+    const vs = this.stickNode.children.splice(n, 1);
+    const findNode = vs[0];
     const newNode = instantiate(findNode);
-    findNode.destroy();
-    console.log("this.showStickNode.children", this.showStickNode.children);
+    // findNode.destroy();
+    // console.log("this.showStickNode.children", this.showStickNode.children);
     const len = this.showStickNode.children.length;
 
     newNode.angle = 0;
-    // const x = newNode.position.x;
     newNode.setPosition(v3(len * 28));
-    // console.log('x', x, v3(x + len * 30))
-    // newNode.setPosition(v3(x + len * 30))
     this.showStickNode.addChild(newNode);
 
     this.score += v[0];
@@ -150,7 +152,14 @@ export class SceneRockCandySystem extends BaseSystem {
 
   private handleTwo = () => {
     if (this.isFail) {
+      alert("已经失败了")
       error("失败了");
+      return;
+    }
+
+    if (this.stickNode.children.length < 2) {
+      alert("你只能再抽一根了")
+      warn("只能再抽一根了");
       return;
     }
     this.handleOne(false);
@@ -162,6 +171,7 @@ export class SceneRockCandySystem extends BaseSystem {
 
   private handleRestart = () => {
     console.log("重启");
+    this.restartBtn.active = false;
     SceneManager.Instance.sceneRestart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
   };
 
@@ -172,6 +182,16 @@ export class SceneRockCandySystem extends BaseSystem {
       // 失败了
       this.isFail = true;
       error("验证，你已经失败了");
+      this.restartBtn.active = true;
+      alert("你已经输了");
+      return;
+    }
+
+    if (this.showSticks.length === 25) {
+      // 25根都抽完了，赢了
+      alert("你赢了");
+      this.restartBtn.active = true;
+      log("你赢了");
     }
   }
 
