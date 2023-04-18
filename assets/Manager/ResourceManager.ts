@@ -37,7 +37,7 @@ export class ResourceManager extends Component {
         new Promise((resolve) => {
           assetManager.loadBundle(abName, (err, bundle) => {
             if (err) {
-              error(`加载ab包(${abName})失败1`, err);
+              error(`加载ab包(${abName})失败`, err);
               resolve({ err, urls });
             } else {
               log(`加载ab包(${abName})成功`);
@@ -50,13 +50,13 @@ export class ResourceManager extends Component {
           });
         })
       );
-      // 加载完所有的 ab 包
-      const bundles = await Promise.all(queue);
-      this.total = bundles.reduce((acc, cur) => acc + cur?.urls?.length, 0);
+    }
+    // 加载完所有的 ab 包
+    const bundles = await Promise.all(queue);
+    this.total = bundles.reduce((acc, cur) => acc + cur?.urls?.length, 0);
 
-      for (const { err, bundle, urls } of bundles) {
-        this.loadAsset(err, bundle, urls, onProgress, onComplete);
-      }
+    for (const { err, bundle, urls } of bundles) {
+      this.loadAsset(err, bundle, urls, onProgress, onComplete);
     }
   }
 
@@ -72,6 +72,7 @@ export class ResourceManager extends Component {
       this.now += urls.length;
       return;
     }
+    console.log("urls", urls);
     urls.forEach((url: string) => {
       bundle.load(url, (err, data) => {
         this.now++;

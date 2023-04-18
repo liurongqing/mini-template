@@ -7,8 +7,8 @@ import {
   ProgressBar,
   log,
 } from "cc";
-import { ResourceManager, UIManager } from "../Manager";
-import { Bundles } from "../Data";
+import { ResourceManager, SceneManager } from "../Manager";
+import { Bundles, AB_KEY } from "../Data";
 
 export class Game extends Component {
   public static Instance: Game = null;
@@ -27,11 +27,12 @@ export class Game extends Component {
     this.progressBar = this.canvas
       .getChildByName("Preloading")
       .getComponent(ProgressBar);
+    console.log("this.progressBar", this.progressBar);
   }
 
   // 游戏开始入口
   public GameStart(): void {
-    console.log("Game Start...");
+    console.log("Game Start...", Bundles);
     ResourceManager.Instance.loadBundles(
       Bundles,
       this.onProgress,
@@ -40,20 +41,22 @@ export class Game extends Component {
   }
 
   // 进度条
-  private onProgress(now, total) {
-    this.progressBar.progress = now / total;
-  }
+  private onProgress = (now, total) => {
+    console.log(now, total);
+    // console.log("this.progressBar", this?.progressBar);
+    // this.progressBar.progress = now / total;
+  };
 
   // 加载完成
   private onComplete() {
-    this.canvas?.destroyAllChildren();
-    this.EnterGameScene();
+    console.log("加载成功");
+    // this.canvas?.destroyAllChildren();
+    // this.EnterGakmeScene();
   }
 
   public EnterGameScene(): void {
-    // 置放游戏地图
-
-    // 置放UI
-    UIManager.Instance.show_ui("UIGame");
+    // 检查更新
+    // 进入场景
+    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
   }
 }
