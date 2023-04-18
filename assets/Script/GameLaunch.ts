@@ -1,6 +1,6 @@
 import { _decorator, Component } from "cc";
 import { Game } from "./Game";
-import { ResourceManager, UIManager } from "../Manager";
+import { ResourceManager, SceneManager } from "../Manager";
 
 const { ccclass } = _decorator;
 
@@ -10,10 +10,10 @@ export class GameLaunch extends Component {
   onLoad(): void {
     // 资源管理
     this.node.addComponent(ResourceManager);
-
+    // 场景管理
+    this.node.addComponent(SceneManager);
     // UI 管理
-    this.node.addComponent(UIManager);
-
+    // this.node.addComponent(UIManager);
     // 初始化游戏逻辑代码
     this.node.addComponent(Game);
   }

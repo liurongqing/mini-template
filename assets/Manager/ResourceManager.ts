@@ -72,7 +72,6 @@ export class ResourceManager extends Component {
       this.now += urls.length;
       return;
     }
-    console.log("urls", urls);
     urls.forEach((url: string) => {
       bundle.load(url, (err, data) => {
         this.now++;
@@ -83,6 +82,8 @@ export class ResourceManager extends Component {
         }
         log(`加载ab包(${bundle.name})下的资源(${url})，成功`);
         if (this.now >= this.total) {
+          // 全部加载完成
+          log("全部加载完成");
           onComplete?.();
         }
       });

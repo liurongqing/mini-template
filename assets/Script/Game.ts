@@ -41,22 +41,20 @@ export class Game extends Component {
   }
 
   // 进度条
-  private onProgress = (now, total) => {
-    console.log(now, total);
-    // console.log("this.progressBar", this?.progressBar);
-    // this.progressBar.progress = now / total;
+  private onProgress = (now: number, total: number) => {
+    this.progressBar.progress = now / total;
   };
 
   // 加载完成
-  private onComplete() {
-    console.log("加载成功");
+  private onComplete = () => {
     // this.canvas?.destroyAllChildren();
-    // this.EnterGakmeScene();
-  }
+    this.EnterGameScene();
+  };
 
-  public EnterGameScene(): void {
+  private EnterGameScene(): void {
     // 检查更新
+
     // 进入场景
-    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
+    SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
   }
 }

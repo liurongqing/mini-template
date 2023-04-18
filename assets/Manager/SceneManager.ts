@@ -31,6 +31,10 @@ export class SceneManager extends Component {
     }
   }
 
+  public addEntity() {
+    // console.log
+  }
+
   //
   public stop() {
     // 停止并销毁场景

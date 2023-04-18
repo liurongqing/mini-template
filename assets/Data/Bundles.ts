@@ -10,5 +10,5 @@ export const AB_KEY = {
 
 export const Bundles = new Map<string, string[]>([
   [AB_KEY.ENTITY, [AB_KEY.ENTITY_SCENE_HOME]],
-  [AB_KEY.GUI, [AB_KEY.GUI_BACKGROUND, AB_KEY.GUI_BTN_GREEN, AB_KEY.GUI_LOGO]],
+  // [AB_KEY.GUI, [AB_KEY.GUI_BACKGROUND, AB_KEY.GUI_BTN_GREEN, AB_KEY.GUI_LOGO]],
 ]);
