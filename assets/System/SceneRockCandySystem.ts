@@ -43,7 +43,7 @@ export class SceneRockCandySystem extends BaseSystem {
     // console.log("SceneRockCandySystem");
 
     // 读取签的精灵图片
-    const stickAtlas = ResourceManager.Instance.getAsset(
+    const stickAtlas = ResourceManager.instance.getAsset(
       AB_KEY.GUI,
       AB_KEY.GUI_STICKS_ATLAS,
       SpriteAtlas
@@ -172,7 +172,7 @@ export class SceneRockCandySystem extends BaseSystem {
   private handleRestart = () => {
     console.log("重启");
     this.restartBtn.active = false;
-    SceneManager.Instance.sceneRestart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
+    SceneManager.instance.sceneRestart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
   };
 
   private check() {

@@ -3,12 +3,12 @@ import { ResourceManager } from "./ResourceManager";
 
 export class UIManager extends Component {
   private canvas: Node = null;
-  public static Instance: UIManager = null;
+  public static instance: UIManager = null;
   private uiMap = {};
 
   protected onLoad(): void {
-    if (UIManager.Instance === null) {
-      UIManager.Instance = this;
+    if (UIManager.instance === null) {
+      UIManager.instance = this;
     } else {
       this.destroy();
       return;
@@ -18,7 +18,7 @@ export class UIManager extends Component {
   }
 
   public show_ui(ui_name, parent = this.canvas): Node {
-    const prefab = ResourceManager.Instance.getAsset("GUI", "UIPrefabs/UIGame");
+    const prefab = ResourceManager.instance.getAsset("GUI", "UIPrefabs/UIGame");
     console.log("prefab", prefab, parent);
     let item = null;
     if (prefab) {

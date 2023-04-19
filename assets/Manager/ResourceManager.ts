@@ -21,11 +21,11 @@ interface IParamComplete {
 export class ResourceManager extends Component {
   private total = 0; // 资源总数量
   private now = 0; // 当前下载完成的资源数量
-  public static Instance: ResourceManager = null;
+  public static instance: ResourceManager = null;
 
   onLoad(): void {
-    if (ResourceManager.Instance === null) {
-      ResourceManager.Instance = this;
+    if (ResourceManager.instance === null) {
+      ResourceManager.instance = this;
     } else {
       this.destroy();
       return;

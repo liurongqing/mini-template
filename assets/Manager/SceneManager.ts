@@ -4,12 +4,12 @@ import { AB_KEY } from "../Data";
 
 export class SceneManager extends Component {
   private canvas: Node = null;
-  public static Instance: SceneManager = null;
+  public static instance: SceneManager = null;
   private scenes = new Map();
 
   protected onLoad(): void {
-    if (SceneManager.Instance === null) {
-      SceneManager.Instance = this;
+    if (SceneManager.instance === null) {
+      SceneManager.instance = this;
     } else {
       this.destroy();
       return;
@@ -28,7 +28,7 @@ export class SceneManager extends Component {
       return;
     }
     console.log("挂载新的", sceneName);
-    const prefab = ResourceManager.Instance.getAsset(AB_KEY.ENTITY, sceneName);
+    const prefab = ResourceManager.instance.getAsset(AB_KEY.ENTITY, sceneName);
     if (!prefab) {
       error(
         `进入场景失败, 没有读取到 ${sceneName} 场景，可能资源名字错了，也有可能没有加载这个资源`

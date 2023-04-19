@@ -20,8 +20,8 @@ export class SceneHomeSystem extends BaseSystem {
 
   private onGameStartClick = throttle((event) => {
     // console.log("点击开始游戏", event);
-    // SceneManager.Instance.sceneStop(AB_KEY.ENTITY_SCENE_HOME);
-    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);
-    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);
+    // SceneManager.instance.sceneStop(AB_KEY.ENTITY_SCENE_HOME);
+    // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);
+    // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);
   });
 }

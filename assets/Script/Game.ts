@@ -11,13 +11,13 @@ import { ResourceManager, SceneManager } from "../Manager";
 import { Bundles, AB_KEY } from "../Data";
 
 export class Game extends Component {
-  public static Instance: Game = null;
+  public static instance: Game = null;
   private canvas: Node = null;
   private progressBar: ProgressBar = null;
 
   onLoad(): void {
-    if (Game.Instance === null) {
-      Game.Instance = this;
+    if (Game.instance === null) {
+      Game.instance = this;
     } else {
       this.destroy();
       return;
@@ -33,7 +33,7 @@ export class Game extends Component {
   // 游戏开始入口
   public GameStart(): void {
     // console.log("Game Start...", Bundles);
-    ResourceManager.Instance.loadBundles(
+    ResourceManager.instance.loadBundles(
       Bundles,
       this.onProgress,
       this.onComplete
@@ -55,7 +55,7 @@ export class Game extends Component {
     // 检查更新
 
     // 进入场景
-    // SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
-    SceneManager.Instance.sceneStart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
+    // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
+    SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
   }
 }

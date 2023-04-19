@@ -22,6 +22,6 @@ export class GameLaunch extends Component {
     // 检查资源更新
 
     // 进入游戏代码的逻辑
-    Game.Instance.GameStart();
+    Game.instance.GameStart();
   }
 }
