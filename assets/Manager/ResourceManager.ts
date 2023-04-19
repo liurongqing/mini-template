@@ -128,6 +128,7 @@ export class ResourceManager extends Component {
       warn(`加载ab包(${abName})下类型为(${type?.name})的资源(${url})，失败`);
       return null;
     }
+    console.log("url", url, type);
     return bondule.get(url, type);
   }
 }

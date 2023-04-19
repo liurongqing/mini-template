@@ -15,7 +15,7 @@ import {
   warn,
 } from "cc";
 import { BaseSystem } from "./BaseSystem";
-import { ResourceManager, SceneManager } from "../Manager";
+import { PopupManager, ResourceManager, SceneManager } from "../Manager";
 import { AB_KEY } from "../Data";
 import { throttle, shuffle } from "../Utils";
 
@@ -56,9 +56,18 @@ export class SceneRockCandySystem extends BaseSystem {
 
     this.stickNode = this.entities.get("Sticks");
     this.showStickNode = this.entities.get("ShowSticks");
-    this.restartBtn = this.entities.get("Restart")
+    this.restartBtn = this.entities.get("Restart");
     this.scoreLabel = this.entities.get("Score").getComponent(Label);
     this.scoreLabel.string = this.format(this.score);
+
+    PopupManager.instance.open(AB_KEY.ENTITY_POPUP_CONFIRM);
+    this.scheduleOnce(() => {
+      console.log("弹出第二个了");
+
+      PopupManager.instance.open(AB_KEY.ENTITY_POPUP_MODAL, {
+        enterQueue: false,
+      });
+    }, 3);
   }
 
   private format(n) {
@@ -68,10 +77,10 @@ export class SceneRockCandySystem extends BaseSystem {
   protected start(): void {
     // 生成创建 stick 签
     this.sticks = shuffle(this.sticks);
-    console.log("this.sticks", this.sticks);
+    // console.log("this.sticks", this.sticks);
 
     for (const [index, value] of this.sticks.entries()) {
-      console.log("index", index, value);
+      // console.log("index", index, value);
       this.createStick(index, value);
     }
 
@@ -105,6 +114,9 @@ export class SceneRockCandySystem extends BaseSystem {
   }
 
   private handleOne = (check = true) => {
+    PopupManager.instance.open(AB_KEY.ENTITY_POPUP_CONFIRM);
+    return;
+
     if (this.isFail) {
       error("失败了");
       return;
@@ -152,13 +164,13 @@ export class SceneRockCandySystem extends BaseSystem {
 
   private handleTwo = () => {
     if (this.isFail) {
-      alert("已经失败了")
+      alert("已经失败了");
       error("失败了");
       return;
     }
 
     if (this.stickNode.children.length < 2) {
-      alert("你只能再抽一根了")
+      alert("你只能再抽一根了");
       warn("只能再抽一根了");
       return;
     }
