@@ -1,6 +1,7 @@
-import { Component, find, Node, instantiate, error, warn } from "cc";
+import { Component, find, Node, instantiate, error, warn, log } from "cc";
 import { ResourceManager } from "./ResourceManager";
 import { AB_KEY } from "../Data";
+import { DataManager } from "./DataManager";
 
 export class SceneManager extends Component {
   private canvas: Node = null;
@@ -20,14 +21,16 @@ export class SceneManager extends Component {
 
   // 进入场景, 可以带参数进入
   public sceneStart(sceneName: string, data?: any, parent = this.canvas) {
-    console.log("start", sceneName);
+    // 没有传参则为空，不需要加判断
+    DataManager.instance.sceneParams = data;
+    
     this.sceneClear();
     const scene = this.scenes.get(sceneName);
     if (scene) {
       scene.active = true;
       return;
     }
-    console.log("挂载新的", sceneName);
+    log("挂载新的场景", sceneName);
     const prefab = ResourceManager.instance.getAsset(AB_KEY.ENTITY, sceneName);
     if (!prefab) {
       error(
@@ -43,18 +46,16 @@ export class SceneManager extends Component {
       warn(`没有创建 ${sceneName + "System.ts"} 文件，在你意料之中，则忽略`);
     }
     this.scenes.set(sceneName, item);
-    console.log(this.scenes);
   }
 
   // 关闭一个场景
   public sceneStop(sceneName, force = false) {
     const scene = this.scenes.get(sceneName);
-    console.log("停止一个场景 ", sceneName, scene);
+    log("停止一个场景 ", sceneName, scene);
     if (scene) {
       if (force) {
         this.scenes.delete(sceneName);
-        // scene.destroy();
-        scene.removeFromParent()
+        scene.removeFromParent();
       }
       scene.active = false;
       return;

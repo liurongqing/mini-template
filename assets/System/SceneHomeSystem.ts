@@ -1,6 +1,11 @@
 import { _decorator } from "cc";
 import { BaseSystem } from "./BaseSystem";
-import { SceneManager } from "../Manager";
+import {
+  AudioManager,
+  DataManager,
+  MiniManager,
+  SceneManager,
+} from "../Manager";
 import { AB_KEY } from "../Data";
 import { throttle } from "../Utils";
 
@@ -16,9 +21,14 @@ export class SceneHomeSystem extends BaseSystem {
       this.onGameStartClick,
       this
     );
+
+    MiniManager.instance.createBannerAd();
   }
 
-  private onGameStartClick = throttle((event) => {
+  private onGameStartClick = throttle(() => {
+    // AudioManager.instance.play(AB_KEY.AUDIO_BACKGROUND, {});
+    // AudioManager.instance.playOneShot(AB_KEY.AUDIO_CLICK);
+    // console.log("AudioManager.instance", AudioManager);
     // console.log("点击开始游戏", event);
     // SceneManager.instance.sceneStop(AB_KEY.ENTITY_SCENE_HOME);
     // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_MAIN);

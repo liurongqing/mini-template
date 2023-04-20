@@ -1,4 +1,4 @@
-import { Prefab, SpriteAtlas, SpriteFrame } from "cc";
+import { AudioClip, Prefab, SpriteAtlas, SpriteFrame } from "cc";
 
 // 常量 key
 export const AB_KEY = {
@@ -10,6 +10,9 @@ export const AB_KEY = {
   ENTITY_POPUP_MODAL: "PopupModal",
   GUI: "GUI",
   GUI_STICKS_ATLAS: "sticks",
+  AUDIO: "Audio",
+  AUDIO_BACKGROUND: "background",
+  AUDIO_CLICK: "click",
   // GUI_BACKGROUND: "background",
   // GUI_BTN_GREEN: "btn_green2",
   // GUI_LOGO: "logo",
@@ -18,7 +21,8 @@ export const AB_KEY = {
 export type IAssetType =
   | typeof Prefab
   | typeof SpriteAtlas
-  | typeof SpriteFrame;
+  | typeof SpriteFrame
+  | typeof AudioClip;
 
 interface IAsset {
   type: IAssetType;
@@ -47,6 +51,15 @@ export const Bundles = new Map<string, Array<IAsset>>([
       {
         type: SpriteAtlas,
         urls: [AB_KEY.GUI_STICKS_ATLAS],
+      },
+    ],
+  ],
+  [
+    AB_KEY.AUDIO,
+    [
+      {
+        type: AudioClip,
+        urls: [AB_KEY.AUDIO_BACKGROUND, AB_KEY.AUDIO_CLICK],
       },
     ],
   ],

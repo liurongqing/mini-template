@@ -89,7 +89,7 @@ export class PopupManager extends Component {
       mask,
       maskClosable,
       closable,
-      mode,
+      mode = this.mode,
       params,
       interval = this.interval,
       immediately = this.immediately,
@@ -206,6 +206,7 @@ export class PopupManager extends Component {
     this.queueArr.sort((a, b) => a.options.priority - b.options.priority);
   }
 
+  // 释放资源
   private recycle(prefab, node: Node, mode: CacheMode) {
     switch (mode) {
       // 正常

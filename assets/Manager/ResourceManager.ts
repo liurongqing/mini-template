@@ -42,7 +42,6 @@ export class ResourceManager extends Component {
     this.now = 0;
 
     const queue = [];
-    // console.log("bundleMap", bundleMap);
     for (const [abName, asset] of bundleMap) {
       queue.push(
         new Promise((resolve) => {
@@ -64,9 +63,7 @@ export class ResourceManager extends Component {
     }
     // 加载完所有的 ab 包
     const bundles = await Promise.all(queue);
-    // console.log("bundles", bundles);
     this.total = bundles.reduce((acc, cur) => {
-      // console.log("cur", cur);
       const num =
         cur?.asset?.reduce(
           (subAcc, subCur) => subAcc + (subCur.urls?.length ?? 0),
@@ -74,8 +71,6 @@ export class ResourceManager extends Component {
         ) || 0;
       return acc + num;
     }, 0);
-    // console.log("this.total", this.total);
-    // return;
 
     for (const { err, bundle, asset } of bundles) {
       this.loadAsset(err, bundle, asset, onProgress, onComplete);
@@ -128,7 +123,7 @@ export class ResourceManager extends Component {
       warn(`加载ab包(${abName})下类型为(${type?.name})的资源(${url})，失败`);
       return null;
     }
-    console.log("url", url, type);
+    log("getAsset url: %o, type: %o", url, type?.name);
     return bondule.get(url, type);
   }
 }

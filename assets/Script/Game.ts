@@ -55,7 +55,7 @@ export class Game extends Component {
     // 检查更新
 
     // 进入场景
-    // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME);
-    SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
+    SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_HOME, { a: 123 });
+    // SceneManager.instance.sceneStart(AB_KEY.ENTITY_SCENE_ROCK_CANDY);
   }
 }
