@@ -1,1 +1,2 @@
-export * from "./WxService";
+export * from "./WechatService";
+export * from "./BytedanceService";

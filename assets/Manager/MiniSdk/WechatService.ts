@@ -1,6 +1,6 @@
 import { IMiniService } from "./IMiniService";
 
-export class WxService implements IMiniService {
+export class WechatService implements IMiniService {
   constructor() {
     //
   }
