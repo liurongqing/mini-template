@@ -1,4 +1,4 @@
 export const CONFIG_DEFAULTS = {
-  SOUND: true,
-  MUSIC: true,
+  SOUND: "Sound",
+  MUSIC: "Music",
 };
